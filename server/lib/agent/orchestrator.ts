@@ -215,7 +215,15 @@ export class AgentOrchestrator extends EventEmitter {
     await this.transitionTo('PAY');
     await this.log(`Processing payments for ${this.requiredServices.length} services...`);
 
-    for (const service of this.requiredServices) {
+    for (let i = 0; i < this.requiredServices.length; i++) {
+      const service = this.requiredServices[i];
+
+      // Add delay between payments to prevent nonce/timing issues
+      if (i > 0) {
+        await this.log('Waiting for blockchain confirmation...', 'info');
+        await new Promise(resolve => setTimeout(resolve, 3000));
+      }
+
       await this.log(`Paying for ${service}...`, 'info');
 
       try {
