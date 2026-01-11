@@ -1,0 +1,706 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   LEO PRIME - NEURAL AGENT OS
+   A synaptic, consciousness-inspired interface for autonomous AI agents
+   Theme: Deep Space Violet with Electric Accents
+   ============================================================================ */
+
+@layer base {
+  :root {
+    /* OKLCH VALUES ONLY - No wrapper! */
+    /* Neural Purple/Violet Theme */
+    --primary: 0.65 0.25 290;          /* Vivid Electric Violet */
+    --primary-foreground: 0.98 0 0;    /* White */
+
+    --secondary: 0.25 0.02 290;        /* Deep Space */
+    --secondary-foreground: 0.95 0 0;
+
+    --accent: 0.75 0.20 200;           /* Electric Cyan */
+    --accent-foreground: 0.10 0 0;
+
+    --destructive: 0.60 0.25 25;       /* Warm Red */
+    --destructive-foreground: 0.98 0 0;
+
+    --success: 0.72 0.20 145;          /* Neon Green */
+    --success-foreground: 0.10 0 0;
+
+    --warning: 0.80 0.18 85;           /* Electric Amber */
+    --warning-foreground: 0.10 0 0;
+
+    /* Surfaces - Deep Space Theme */
+    --background: 0.08 0.02 290;       /* Near Black with Violet tint */
+    --foreground: 0.93 0.01 290;       /* Off-white with warmth */
+
+    --card: 0.12 0.03 290;             /* Slightly lighter */
+    --card-foreground: 0.93 0.01 290;
+
+    --muted: 0.20 0.02 290;
+    --muted-foreground: 0.78 0.02 290;  /* Increased from 0.65 for better contrast */
+
+    --border: 0.25 0.04 290;
+    --input: 0.20 0.03 290;
+    --ring: 0.65 0.25 290;
+
+    /* Special Neural Colors */
+    --neural-pink: 0.70 0.22 330;      /* Hot Pink */
+    --neural-blue: 0.65 0.18 250;      /* Deep Blue */
+    --neural-cyan: 0.80 0.15 195;      /* Bright Cyan */
+    --neural-gold: 0.82 0.16 85;       /* Golden */
+
+    --radius: 0.75rem;
+  }
+}
+
+/* ============================================================================
+   CUSTOM SCROLLBAR - Synaptic Theme
+   ============================================================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: oklch(0.10 0.02 290);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, oklch(0.65 0.25 290), oklch(0.70 0.22 330));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, oklch(0.75 0.25 290), oklch(0.80 0.22 330));
+}
+
+/* ============================================================================
+   BASE STYLES
+   ============================================================================ */
+
+html {
+  scroll-behavior: smooth;
+  font-size: clamp(14px, 0.875rem + 0.25vw, 16px);
+}
+
+body {
+  font-family: 'Outfit', system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  background: oklch(var(--background));
+  color: oklch(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.font-mono, code, pre {
+  font-family: 'Space Mono', monospace;
+  font-feature-settings: 'liga' 1;
+}
+
+/* ============================================================================
+   NEURAL GLOW EFFECTS - Synaptic aesthetic
+   ============================================================================ */
+
+.glow-violet {
+  box-shadow:
+    0 0 20px oklch(0.65 0.25 290 / 0.4),
+    0 0 40px oklch(0.65 0.25 290 / 0.2),
+    0 0 60px oklch(0.65 0.25 290 / 0.1);
+}
+
+.glow-pink {
+  box-shadow:
+    0 0 20px oklch(0.70 0.22 330 / 0.4),
+    0 0 40px oklch(0.70 0.22 330 / 0.2);
+}
+
+.glow-cyan {
+  box-shadow:
+    0 0 20px oklch(0.80 0.15 195 / 0.4),
+    0 0 40px oklch(0.80 0.15 195 / 0.2);
+}
+
+.glow-success {
+  box-shadow:
+    0 0 20px oklch(0.72 0.20 145 / 0.4),
+    0 0 40px oklch(0.72 0.20 145 / 0.2);
+}
+
+/* Text glow */
+.text-glow {
+  text-shadow:
+    0 0 20px oklch(0.65 0.25 290 / 0.6),
+    0 0 40px oklch(0.65 0.25 290 / 0.3);
+}
+
+.text-glow-pink {
+  text-shadow:
+    0 0 20px oklch(0.70 0.22 330 / 0.6),
+    0 0 40px oklch(0.70 0.22 330 / 0.3);
+}
+
+/* ============================================================================
+   GRADIENT TEXT - Neural typography
+   ============================================================================ */
+
+.gradient-text {
+  background: linear-gradient(135deg,
+    oklch(0.65 0.25 290),
+    oklch(0.70 0.22 330),
+    oklch(0.80 0.15 195)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-flow 6s ease infinite;
+}
+
+.gradient-text-static {
+  background: linear-gradient(135deg,
+    oklch(0.75 0.25 290),
+    oklch(0.80 0.22 330)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes gradient-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ============================================================================
+   NEURAL NETWORK BACKGROUND - Synaptic patterns
+   ============================================================================ */
+
+.neural-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.neural-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, oklch(0.65 0.25 290 / 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, oklch(0.70 0.22 330 / 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, oklch(0.80 0.15 195 / 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Grid pattern - neural mesh */
+.neural-grid {
+  background-image:
+    linear-gradient(oklch(0.65 0.25 290 / 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.65 0.25 290 / 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Dot pattern - synapses */
+.synapse-dots {
+  background-image: radial-gradient(oklch(0.65 0.25 290 / 0.15) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* ============================================================================
+   PULSE ANIMATIONS - Neural firing
+   ============================================================================ */
+
+@keyframes neural-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 20px oklch(0.65 0.25 290 / 0.3),
+      0 0 40px oklch(0.65 0.25 290 / 0.1);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 30px oklch(0.65 0.25 290 / 0.5),
+      0 0 60px oklch(0.65 0.25 290 / 0.3),
+      0 0 80px oklch(0.65 0.25 290 / 0.1);
+    transform: scale(1.02);
+  }
+}
+
+.animate-neural-pulse {
+  animation: neural-pulse 3s ease-in-out infinite;
+}
+
+@keyframes synapse-fire {
+  0% { opacity: 0.3; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0.3; transform: scale(0.95); }
+}
+
+.animate-synapse {
+  animation: synapse-fire 2s ease-in-out infinite;
+}
+
+/* ============================================================================
+   FADE-IN-UP ANIMATION - Page reveals
+   ============================================================================ */
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+/* Staggered children */
+.stagger-children > * {
+  opacity: 0;
+  animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 80ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 160ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 240ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 320ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 400ms; }
+
+/* ============================================================================
+   GLASS MORPHISM - Neural panels
+   ============================================================================ */
+
+.glass-card {
+  background: oklch(0.12 0.03 290 / 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid oklch(0.30 0.05 290 / 0.5);
+}
+
+.glass-card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-hover:hover {
+  background: oklch(0.15 0.04 290 / 0.9);
+  border-color: oklch(0.65 0.25 290 / 0.5);
+  box-shadow:
+    0 0 30px oklch(0.65 0.25 290 / 0.2),
+    0 20px 40px oklch(0 0 0 / 0.3);
+  transform: translateY(-4px);
+}
+
+/* ============================================================================
+   NEURAL BADGES - Circular gradient icons
+   ============================================================================ */
+
+.neural-badge {
+  @apply w-12 h-12 rounded-full flex items-center justify-center relative;
+  background: linear-gradient(135deg, oklch(0.65 0.25 290), oklch(0.55 0.22 310));
+}
+
+.neural-badge::before {
+  content: '';
+  @apply absolute inset-0 rounded-full blur-xl -z-10;
+  background: oklch(0.65 0.25 290 / 0.4);
+}
+
+.neural-badge-pink {
+  background: linear-gradient(135deg, oklch(0.70 0.22 330), oklch(0.60 0.20 350));
+}
+
+.neural-badge-pink::before {
+  background: oklch(0.70 0.22 330 / 0.4);
+}
+
+.neural-badge-cyan {
+  background: linear-gradient(135deg, oklch(0.80 0.15 195), oklch(0.70 0.18 210));
+}
+
+.neural-badge-cyan::before {
+  background: oklch(0.80 0.15 195 / 0.4);
+}
+
+.neural-badge-success {
+  background: linear-gradient(135deg, oklch(0.72 0.20 145), oklch(0.62 0.18 160));
+}
+
+.neural-badge-success::before {
+  background: oklch(0.72 0.20 145 / 0.4);
+}
+
+.neural-badge-gold {
+  background: linear-gradient(135deg, oklch(0.82 0.16 85), oklch(0.72 0.18 70));
+}
+
+.neural-badge-gold::before {
+  background: oklch(0.82 0.16 85 / 0.4);
+}
+
+/* ============================================================================
+   BUTTON STYLES - Neural interactions
+   ============================================================================ */
+
+.btn-neural {
+  @apply relative overflow-hidden font-semibold transition-all duration-300;
+  background: linear-gradient(135deg, oklch(0.65 0.25 290), oklch(0.55 0.22 310));
+}
+
+.btn-neural::before {
+  content: '';
+  @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+  background: linear-gradient(135deg, oklch(0.75 0.25 290), oklch(0.65 0.22 310));
+}
+
+.btn-neural:hover::before {
+  @apply opacity-100;
+}
+
+.btn-neural:hover {
+  box-shadow:
+    0 0 20px oklch(0.65 0.25 290 / 0.5),
+    0 0 40px oklch(0.65 0.25 290 / 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-neural:active {
+  transform: translateY(0);
+}
+
+.btn-outline-neural {
+  @apply relative font-semibold transition-all duration-300;
+  border: 2px solid oklch(0.65 0.25 290 / 0.5);
+  background: transparent;
+}
+
+.btn-outline-neural:hover {
+  border-color: oklch(0.65 0.25 290);
+  background: oklch(0.65 0.25 290 / 0.1);
+  box-shadow: 0 0 20px oklch(0.65 0.25 290 / 0.3);
+}
+
+/* ============================================================================
+   STATUS INDICATORS - Neural states
+   ============================================================================ */
+
+.status-dot {
+  @apply w-3 h-3 rounded-full relative;
+}
+
+.status-dot::before {
+  content: '';
+  @apply absolute inset-0 rounded-full;
+  animation: status-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.status-dot.active {
+  background: oklch(0.72 0.20 145);
+}
+
+.status-dot.active::before {
+  background: oklch(0.72 0.20 145 / 0.5);
+}
+
+.status-dot.pending {
+  background: oklch(0.65 0.01 290);
+}
+
+.status-dot.processing {
+  background: oklch(0.65 0.25 290);
+}
+
+.status-dot.processing::before {
+  background: oklch(0.65 0.25 290 / 0.5);
+}
+
+.status-dot.error {
+  background: oklch(0.60 0.25 25);
+}
+
+.status-dot.error::before {
+  background: oklch(0.60 0.25 25 / 0.5);
+}
+
+@keyframes status-ping {
+  75%, 100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* ============================================================================
+   CODE BLOCKS - Neural terminal
+   ============================================================================ */
+
+.code-block {
+  @apply rounded-xl overflow-hidden;
+  background: oklch(0.08 0.02 290);
+  border: 1px solid oklch(0.65 0.25 290 / 0.2);
+}
+
+.code-block pre {
+  @apply p-5 overflow-x-auto text-sm;
+}
+
+/* ============================================================================
+   LANDING PAGE HERO - Dramatic entrance
+   ============================================================================ */
+
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background:
+    radial-gradient(ellipse at 30% 20%, oklch(0.65 0.25 290 / 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, oklch(0.70 0.22 330 / 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, oklch(0.80 0.15 195 / 0.08) 0%, transparent 60%);
+  animation: hero-float 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes hero-float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(2%, 2%) rotate(1deg); }
+  66% { transform: translate(-2%, -1%) rotate(-1deg); }
+}
+
+/* ============================================================================
+   FLOATING ORBS - Ambient effects
+   ============================================================================ */
+
+.floating-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  animation: float-orb 15s ease-in-out infinite;
+}
+
+.floating-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: oklch(0.65 0.25 290 / 0.15);
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.floating-orb-2 {
+  width: 300px;
+  height: 300px;
+  background: oklch(0.70 0.22 330 / 0.12);
+  top: 60%;
+  right: 15%;
+  animation-delay: -5s;
+}
+
+.floating-orb-3 {
+  width: 250px;
+  height: 250px;
+  background: oklch(0.80 0.15 195 / 0.1);
+  bottom: 20%;
+  left: 30%;
+  animation-delay: -10s;
+}
+
+@keyframes float-orb {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(20px, -30px); }
+  50% { transform: translate(-10px, 20px); }
+  75% { transform: translate(15px, 10px); }
+}
+
+/* ============================================================================
+   TIMELINE STYLES
+   ============================================================================ */
+
+.timeline-connector {
+  @apply relative;
+}
+
+.timeline-connector::before {
+  content: '';
+  @apply absolute left-[11px] top-0 bottom-0 w-0.5;
+  background: linear-gradient(180deg,
+    oklch(0.65 0.25 290),
+    oklch(0.70 0.22 330)
+  );
+  opacity: 0.3;
+}
+
+/* ============================================================================
+   ACCESSIBILITY & FOCUS STATES
+   ============================================================================ */
+
+:focus-visible {
+  @apply outline-none;
+  box-shadow:
+    0 0 0 2px oklch(var(--background)),
+    0 0 0 4px oklch(0.65 0.25 290);
+}
+
+/* ============================================================================
+   SELECTION STYLING
+   ============================================================================ */
+
+::selection {
+  background: oklch(0.65 0.25 290 / 0.3);
+  color: oklch(var(--foreground));
+}
+
+::-moz-selection {
+  background: oklch(0.65 0.25 290 / 0.3);
+  color: oklch(var(--foreground));
+}
+
+/* ============================================================================
+   RESPONSIVE UTILITIES
+   ============================================================================ */
+
+.touch-target {
+  @apply min-h-11 min-w-11;
+}
+
+/* ============================================================================
+   TERMINAL CURSOR
+   ============================================================================ */
+
+.cursor-blink::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+  color: oklch(0.65 0.25 290);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ============================================================================
+   SCAN LINE - Retro effect
+   ============================================================================ */
+
+.scan-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.scan-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    oklch(0.65 0.25 290 / 0.3) 20%,
+    oklch(0.65 0.25 290 / 0.8) 50%,
+    oklch(0.65 0.25 290 / 0.3) 80%,
+    transparent 100%
+  );
+  animation: scan-move 8s linear infinite;
+}
+
+@keyframes scan-move {
+  0% { transform: translateY(-100%); opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* ============================================================================
+   FEATURE CARDS - Landing page
+   ============================================================================ */
+
+.feature-card {
+  @apply relative p-6 md:p-8 rounded-2xl overflow-hidden;
+  background: oklch(0.12 0.03 290 / 0.6);
+  border: 1px solid oklch(0.30 0.05 290 / 0.3);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    oklch(0.65 0.25 290 / 0.1),
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.feature-card:hover {
+  border-color: oklch(0.65 0.25 290 / 0.5);
+  transform: translateY(-8px);
+  box-shadow:
+    0 0 40px oklch(0.65 0.25 290 / 0.2),
+    0 30px 60px oklch(0 0 0 / 0.4);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+/* ============================================================================
+   STAT COUNTER
+   ============================================================================ */
+
+@property --num {
+  syntax: '<integer>';
+  initial-value: 0;
+  inherits: false;
+}
+
+.counter-animate {
+  transition: --num 1.5s ease-out;
+  counter-reset: num var(--num);
+}
+
+.counter-animate::after {
+  content: counter(num);
+}
