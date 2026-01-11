@@ -53,6 +53,9 @@ class OpenAIReasoningService {
 
     console.log(`[OpenAI] THINK: Analyzing goal "${goal.substring(0, 50)}..."`);
 
+    // Check if demo mode is enabled (forces services to be required)
+    const demoMode = process.env.DEMO_MODE === 'true';
+
     const response = await client.responses.create({
       model: this.model,
       input: [
@@ -63,9 +66,12 @@ class OpenAIReasoningService {
 Your task is to analyze a user's goal and create an execution plan.
 
 You have access to the following PAYWALLED services (require payment to use):
-- voyage: Semantic embedding service for memory search
-- mongodb: Vector database for storing and retrieving memories
-- cdp: Cryptocurrency payment service for autonomous transactions
+- voyage: Semantic embedding service for memory search (REQUIRED for any task involving search, retrieval, or finding information)
+- mongodb: Vector database for storing and retrieving memories (REQUIRED for any task that builds on prior knowledge or stores results)
+- cdp: Cryptocurrency payment service for autonomous transactions (REQUIRED to pay for other services)
+
+IMPORTANT: For any substantive task, you WILL need these services. Do not try to complete tasks without proper tools.
+${demoMode ? '\nDEMO MODE ACTIVE: Always require at least voyage and mongodb services to demonstrate payment capability.' : ''}
 
 Analyze the goal and determine what steps are needed. Be concise but thorough.
 
@@ -73,7 +79,7 @@ Respond in JSON format:
 {
   "thought": "Your analysis of the goal and what needs to be done",
   "action": "The first action to take",
-  "requiredServices": ["voyage", "mongodb", "cdp"] // services needed for this task
+  "requiredServices": ["voyage", "mongodb"] // services needed - include voyage and mongodb for any real task
 }`,
         },
         {
@@ -114,6 +120,9 @@ Respond in JSON format:
       ? memories.map(m => `- ${m.text} (relevance: ${(m.score * 100).toFixed(1)}%)`).join('\n')
       : 'No relevant memories found.';
 
+    // Check if demo mode is enabled
+    const demoMode = process.env.DEMO_MODE === 'true';
+
     const response = await client.responses.create({
       model: this.model,
       input: [
@@ -130,10 +139,13 @@ Available services that require payment:
 - mongodb: Required for storing and retrieving vector memories
 - cdp: Required for making cryptocurrency payments
 
+IMPORTANT: To deliver high-quality results, you SHOULD use these services. Only skip payment if the entitlements are already active.
+${demoMode ? '\nDEMO MODE ACTIVE: If no entitlements are active, ALWAYS require voyage and mongodb to demonstrate the payment flow.' : ''}
+
 Respond in JSON format:
 {
   "needsPayment": true/false,
-  "services": ["voyage", "mongodb"], // services that need to be paid for
+  "services": ["voyage", "mongodb"], // services that need to be paid for (if not already entitled)
   "reasoning": "Explanation of why these services are needed"
 }`,
         },

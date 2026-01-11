@@ -68,6 +68,25 @@ entitlementsRouter.get('/prices', async (_req: Request, res: Response) => {
 });
 
 /**
+ * Reset all entitlements (for demo purposes)
+ * DELETE /api/entitlements/reset
+ */
+entitlementsRouter.delete('/reset', async (_req: Request, res: Response) => {
+  try {
+    const count = await mongodb.deactivateAllEntitlements();
+    console.log(`[Route:entitlements] Reset ${count} entitlements for demo`);
+    res.json({
+      success: true,
+      message: `Deactivated ${count} entitlements`,
+      count,
+    });
+  } catch (error: any) {
+    console.error('[Route:entitlements] Failed to reset entitlements:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
  * Subscribe to a service (manual trigger)
  * POST /api/entitlements/subscribe/:service
  */

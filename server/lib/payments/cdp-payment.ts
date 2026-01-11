@@ -193,11 +193,12 @@ class CDPPaymentService {
 
     try {
       // Create and broadcast the transfer
+      // Note: gasless: true requires CDP account feature to be enabled
+      // Using standard transfer which uses ETH for gas (~$0.001 on Base)
       const transfer = await this.wallet.createTransfer({
         amount,
         assetId: 'usdc',
         destination: recipient,
-        gasless: true, // Use gasless transactions on Base
       });
 
       // Wait for confirmation
@@ -254,8 +255,19 @@ class CDPPaymentService {
    */
   async shouldUseRealPayments(): Promise<boolean> {
     try {
-      const balance = await this.getBalance();
-      return balance >= 0.50; // Minimum balance for one service
+      await this.initialize();
+      if (!this.wallet) return false;
+
+      const usdcBalance = await this.getBalance();
+      const ethBalance = await this.wallet.getBalance('eth');
+      const ethNum = parseFloat(ethBalance.toString());
+
+      // Need USDC for payment and ETH for gas
+      const hasEnoughUsdc = usdcBalance >= 0.50;
+      const hasEnoughEth = ethNum >= 0.00001; // ~$0.03 ETH minimum
+
+      console.log(`[CDP] Balance check: ${usdcBalance} USDC, ${ethNum} ETH`);
+      return hasEnoughUsdc && hasEnoughEth;
     } catch {
       return false;
     }

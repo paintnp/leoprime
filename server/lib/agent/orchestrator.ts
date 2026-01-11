@@ -140,6 +140,14 @@ export class AgentOrchestrator extends EventEmitter {
 
     this.requiredServices = result.requiredServices || [];
 
+    // DEMO MODE: Force services if none were selected
+    const demoMode = process.env.DEMO_MODE === 'true';
+    if (demoMode && this.requiredServices.length === 0) {
+      console.log('[Agent] DEMO MODE: Forcing voyage and mongodb services');
+      this.requiredServices = ['voyage', 'mongodb'];
+      await this.log('Demo mode: Requiring voyage and mongodb services', 'info');
+    }
+
     await this.transitionTo('THINK', {
       thought: result.thought,
       action: result.action,
@@ -181,9 +189,21 @@ export class AgentOrchestrator extends EventEmitter {
 
     await this.log(decision.reasoning, 'info', { decision });
 
-    if (decision.needsPayment) {
+    // DEMO MODE: Force payment if no active entitlements
+    const demoMode = process.env.DEMO_MODE === 'true';
+    const noActiveEntitlements = activeEntitlements.length === 0;
+
+    if (decision.needsPayment || (demoMode && noActiveEntitlements)) {
       // Filter out already active services
-      this.requiredServices = decision.services.filter(s => !activeEntitlements.includes(s));
+      let servicesToPay = decision.services.filter(s => !activeEntitlements.includes(s));
+
+      // Demo mode: ensure at least voyage and mongodb are included
+      if (demoMode && servicesToPay.length === 0 && noActiveEntitlements) {
+        servicesToPay = ['voyage', 'mongodb'];
+        console.log('[Agent] DEMO MODE: Forcing voyage and mongodb for payment demo');
+      }
+
+      this.requiredServices = servicesToPay;
       await this.log(`Services requiring payment: ${this.requiredServices.join(', ')}`, 'info');
     } else {
       this.requiredServices = [];

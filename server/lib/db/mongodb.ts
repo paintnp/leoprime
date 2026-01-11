@@ -358,6 +358,14 @@ class MongoDBService {
     await this.entitlements.updateOne({ _id: id } as any, { $set: { isActive: false } });
   }
 
+  async deactivateAllEntitlements(): Promise<number> {
+    const result = await this.entitlements.updateMany(
+      { isActive: true } as any,
+      { $set: { isActive: false } }
+    );
+    return result.modifiedCount;
+  }
+
   // ============================================================================
   // LOGS
   // ============================================================================

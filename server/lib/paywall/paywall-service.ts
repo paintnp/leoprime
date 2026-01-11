@@ -15,7 +15,8 @@ export interface SubscriptionResult {
 }
 
 // Paywall recipient address (the service provider receiving payments)
-const PAYWALL_RECIPIENT = '0x742d35Cc6634C0532925a3b844Bc9e7595f12AB3'; // Example address
+// Set PAYWALL_RECIPIENT env var to your own wallet for "pay to self" demo mode
+const PAYWALL_RECIPIENT = process.env.PAYWALL_RECIPIENT || '0x742d35Cc6634C0532925a3b844Bc9e7595f12AB3';
 
 class PaywallServiceManager {
   private signingSecret: Uint8Array | null = null;
